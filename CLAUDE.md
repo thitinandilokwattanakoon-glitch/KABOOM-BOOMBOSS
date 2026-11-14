@@ -32,6 +32,7 @@ cd frontend  && npm install && npm run dev   # พอร์ต 5173
 - ห้องเกมเก็บในหน่วยความจำ รีสตาร์ท backend แล้วห้องที่เปิดอยู่หายหมด (บัญชี ชุดคำถาม รูป อยู่ใน H2 ถาวร)
 - `app.cors.allowed-origins=http://localhost:5173` ใน `application.properties`
 - ลืมรหัสผ่าน: ส่งอีเมลผ่าน SMTP ที่ตั้งด้วย environment variable `SPRING_MAIL_HOST`, `SPRING_MAIL_PORT`, `SPRING_MAIL_USERNAME`, `SPRING_MAIL_PASSWORD` (ผู้ใช้ตั้งเอง ห้ามใส่ใน properties) ถ้ายังไม่ตั้ง ลิงก์จะพิมพ์ในหน้าต่าง backend แทน (ข้อความ log เป็นภาษาอังกฤษเพราะคอนโซล Windows แสดงไทยเป็น ?)
+- ขึ้นออนไลน์ (15 พ.ย. 2026): ดู `DEPLOY.md` backend บน Railway ด้วย `backend/Dockerfile` (Root Directory `backend`, Volume `/data`, `SPRING_DATASOURCE_URL=jdbc:h2:file:/data/kaboom`, `APP_CORS_ALLOWEDORIGINS`, `APP_FRONTENDURL`) frontend บน Vercel (Root Directory `frontend`, `VITE_API_BASE`) `server.port=${PORT:8080}` ทดสอบแล้วด้วยการรัน jar พร้อม env แบบออนไลน์ในเครื่อง (CORS, WebSocket, DB) ยังไม่เคย build Docker จริง (เครื่องผู้ใช้ไม่มี Docker) และยังไม่ได้ deploy จริง
 - `app.frontend-url` ใช้สร้างลิงก์ในอีเมล, `app.auth.session-hours=12` อายุล็อกอินเมื่อไม่ติ๊ก "จดจำฉันไว้" (ติ๊ก = `app.auth.token-days=30`)
 
 ## เทคโนโลยี
