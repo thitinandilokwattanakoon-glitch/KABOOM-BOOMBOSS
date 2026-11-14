@@ -1,0 +1,214 @@
+/* My Dashboard (student): "Recent Activity" cards as in the user's concept, in the night theme of the
+ * other student pages. Uses the --sh-* tokens of student-home.css plus the few below. */
+:root {
+  --sd-sky-top: #bfe6ff;
+  --sd-sky-bottom: #eaf8ff;
+  --sd-hill: #8aa300;
+  --sd-hill-light: #c9e07a;
+  --sd-card-top: rgba(20, 42, 92, 0.96);
+  --sd-card-bottom: rgba(9, 19, 50, 0.97);
+  --sd-track: rgba(4, 11, 30, 0.7);
+  --sd-right-bg: rgba(46, 204, 138, 0.2);
+  --sd-right-edge: #5fe6aa;
+  --sd-wrong-bg: rgba(255, 54, 94, 0.18);
+  --sd-wrong-edge: #ff7890;
+}
+
+.sd-wrap { width: 100%; max-width: 1180px; margin: 0 auto; }
+.sd-narrow { max-width: 640px; }
+.sd-wrap > .sh-title { margin-bottom: 18px; font-size: 2.1rem; }
+.sd-note { display: grid; justify-items: center; gap: 12px; margin: 40px 0; color: var(--sh-muted); text-align: center; }
+.sd-note p { margin: 0; }
+
+/* ---------- cards ---------- */
+.sd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 26px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sd-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 236px;
+  padding: 0 0 14px;
+  border: 1px solid var(--sh-panel-edge);
+  border-radius: var(--sh-r-md);
+  background: linear-gradient(170deg, var(--sd-card-top), var(--sd-card-bottom));
+  color: var(--sh-text);
+  font-weight: 400;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 0 14px 30px var(--sh-drop-soft);
+  transition: transform 0.16s var(--sh-ease), box-shadow 0.16s var(--sh-ease), border-color 0.16s var(--sh-ease);
+}
+.sd-card:hover { transform: translateY(-4px); border-color: var(--sh-cyan-bright); box-shadow: 0 0 24px var(--sh-cyan-glow), 0 18px 34px var(--sh-drop); }
+.sd-card:active { transform: translateY(0); }
+/* little landscape on top of each card: sky and two hills */
+.sd-scene {
+  flex: none;
+  display: block;
+  width: 100%;
+  height: 58px;
+  background:
+    radial-gradient(ellipse 34% 46% at 22% 108%, var(--sd-hill) 98%, transparent 100%),
+    radial-gradient(ellipse 30% 40% at 80% 108%, var(--sd-hill) 98%, transparent 100%),
+    radial-gradient(ellipse 46% 34% at 50% 110%, var(--sd-hill-light) 98%, transparent 100%),
+    linear-gradient(180deg, var(--sd-sky-top), var(--sd-sky-bottom));
+}
+.sd-card-name {
+  margin: 14px 14px 2px;
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.sd-card-meta { margin: 0; color: var(--sh-muted); font-size: 0.88rem; }
+.sd-score { width: calc(100% - 28px); margin-top: auto; padding-top: 14px; }
+.sd-score-total { display: block; margin-bottom: 4px; color: var(--sh-text-soft); font-size: 0.88rem; }
+.sd-bar {
+  position: relative;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--sd-track);
+  overflow: hidden;
+}
+.sd-bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sh-blue), var(--sh-cyan));
+}
+.sd-bar-text {
+  position: absolute;
+  inset: 0 auto 0 12px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.86rem;
+  text-shadow: 0 1px 2px var(--sh-drop);
+}
+
+.sd-empty { display: grid; justify-items: center; gap: 8px; max-width: 520px; margin: 0 auto; padding: 36px 24px 30px; text-align: center; }
+.sd-empty-title { margin: 0; font-weight: 600; font-size: 1.2rem; }
+
+/* ---------- one game ---------- */
+.sd-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+  padding: 6px 12px 6px 6px;
+  border-radius: var(--sh-r-sm);
+  background: none;
+  color: var(--sh-text-soft);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+.sd-back:hover { background: var(--sh-cyan-wash); color: var(--sh-text); }
+.sd-detail { overflow: hidden; }
+.sd-detail .sd-scene { height: 72px; }
+.sd-detail-body { padding: 18px 22px 22px; }
+.sd-detail-body .sh-title { overflow-wrap: anywhere; }
+.sd-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 16px 0 18px;
+}
+.sd-stats > div {
+  padding: 10px 8px;
+  border: 1px solid var(--sh-divider);
+  border-radius: var(--sh-r-sm);
+  background: var(--sh-inset);
+  text-align: center;
+}
+.sd-stats dt { color: var(--sh-muted); font-size: 0.85rem; }
+.sd-stats dd { margin: 0; font-weight: 700; font-size: 1.6rem; line-height: 1.3; color: var(--sh-gold-2); }
+.sd-stats small { color: var(--sh-muted); font-weight: 400; font-size: 0.9rem; }
+.sd-practice-btn { width: 100%; justify-content: center; margin: 0; }
+.sd-practice-btn:disabled { opacity: 0.5; cursor: default; }
+.sd-hint { margin: 10px 0 0; color: var(--sh-muted); font-size: 0.88rem; text-align: center; }
+.sd-sub { margin: 22px 0 10px; font-weight: 600; font-size: 1.1rem; }
+.sd-board { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.sd-board li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px 6px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--sh-r-sm);
+  background: var(--sh-inset);
+}
+.sd-board li.is-me { border-color: var(--sh-gold-2); }
+.sd-place { flex: none; width: 26px; font-weight: 700; text-align: center; color: var(--sh-cyan-bright); }
+.sd-face { flex: none; width: 34px; height: 34px; }
+.sd-name { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.sd-points { flex: none; font-weight: 600; }
+.sd-points small { color: var(--sh-muted); font-weight: 400; }
+
+/* ---------- solo practice ---------- */
+.sd-quiz { padding: 20px 22px 22px; }
+.sd-question { margin: 6px 0 16px; font-weight: 600; font-size: 1.35rem; line-height: 1.45; overflow-wrap: anywhere; }
+.sd-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.sd-choice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 8px 12px;
+  border: 1px solid var(--sh-inset-edge);
+  border-radius: var(--sh-r-sm);
+  background: var(--sh-inset);
+  color: var(--sh-text);
+  font-weight: 400;
+  font-size: 1rem;
+  text-align: left;
+  overflow-wrap: anywhere;
+  transition: border-color 0.14s var(--sh-ease), background-color 0.14s var(--sh-ease), transform 0.14s var(--sh-ease);
+}
+.sd-choice:hover:not(:disabled) { border-color: var(--sh-cyan-bright); background: var(--sh-cyan-wash); transform: translateY(-1px); }
+.sd-choice:disabled { cursor: default; }
+.sd-choice.is-picked { border-color: var(--sh-cyan-bright); }
+.sd-choice.is-right { border-color: var(--sd-right-edge); background: var(--sd-right-bg); }
+.sd-choice.is-wrong { border-color: var(--sd-wrong-edge); background: var(--sd-wrong-bg); }
+.sd-choice.is-dim { opacity: 0.55; }
+.sd-letter {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--sh-cyan-wash);
+  color: var(--sh-cyan-bright);
+  font-weight: 700;
+}
+.sd-after { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+.sd-quiz > .sh-status { margin-top: 12px; }
+.sd-done { display: grid; justify-items: center; gap: 8px; padding: 36px 24px 30px; text-align: center; }
+.sd-done-score { margin: 0 0 10px; font-weight: 700; font-size: 2rem; color: var(--sh-gold-2); }
+.sd-done-score small { color: var(--sh-muted); font-weight: 400; font-size: 1rem; }
+.sd-done-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+
+@media (max-width: 760px) {
+  .sd-wrap > .sh-title { font-size: 1.7rem; }
+  .sd-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+  .sd-card { min-height: 210px; }
+  .sd-card-name { font-size: 1.1rem; }
+  .sd-detail-body, .sd-quiz { padding: 16px 14px 18px; }
+}
+@media (max-width: 520px) {
+  .sd-choices { grid-template-columns: minmax(0, 1fr); }
+  .sd-after { flex-direction: column; align-items: stretch; }
+  .sd-stats dd { font-size: 1.3rem; }
+}
+
+/* keep the page title clear of the logo that hangs below the top bar */
+@media (min-width: 761px) {
+  .sd-wrap:not(.sd-narrow) { padding-top: 22px; }
+}
